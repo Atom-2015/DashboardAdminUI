@@ -5,13 +5,14 @@ function Companylist() {
 
     const [companylist, setCompanylist] = useState();
     useEffect(() => {
-        (() => {
+        (async () => {
             try {
 
-                const response = axios.get('http://localhost:3001/api/detail');
+                const response = await axios.get('http://localhost:3001/api/detail');
+                console.log("The response for response api call",response.data.data)
                 if (response.status === 200) {
-                    setCompanylist(response.data.company_name);
-                    console.log(companylist);
+                    setCompanylist(response.data.data );
+                    console.log("Company list",companylist);
                 }
 
             } catch (error) {
@@ -27,14 +28,14 @@ function Companylist() {
     return (
         <>
             <div>companylist</div>
-            {/* {
-                companylist.map((name, index) => (
+            { companylist &&
+                companylist.map((item, index) => (
                     <ul>
-                        <li>{index} , {name}</li>
+                        <li>{index} , {item.company_name}</li>
                         <li> <button className=' bg-slate-500 ' onClick={() => navigate('/detail', { state: { reportid: "hello" } })}  >click</button></li>
                     </ul>
                 ))
-            } */}
+            }
         </>
     )
 }
